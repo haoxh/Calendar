@@ -1,10 +1,20 @@
-# Calendar
+# Calendar（4KB）
 
-4KB 的只负责生成日历json数据工具
+ 只负责生成日历json数据的工具
 
 ###使用与功能
 
-生成的json 数据
+```sh
+ npm i @haoxh/calendar
+```
+
+or
+
+```sh
+ yarn add @haoxh/calendar
+```
+
+基本使用
 
 ```js
 const opt = {
@@ -70,7 +80,7 @@ calendar.toDate({year,month}).paint()
 例子
 
 ```js
-import  Calendar from '@haoxh/Calendar'
+import  Calendar from '@haoxh/Calendar.min'
   const opt = {
     prev: '上个月',
     current: '当前',
