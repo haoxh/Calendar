@@ -1,6 +1,12 @@
+function isObject(args) {
+  return Object.prototype.toString.call(args) === "[object Object]"
+}
 export default function Calendar(options) {
   if (!(this instanceof Calendar)) {
     return new Calendar(options)
+  }
+  if(!isObject(options)){
+    throw TypeError(' Calendar argument must be an object')
   }
   this.options = options
   this.mouths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -41,6 +47,14 @@ Calendar.prototype = {
   // 几月几号周几
   getPosDay(year, month, day = 1) {
     return new Date(year, month, day, 0, 0, 0).getDay()
+  },
+  format(str){
+    let separators = str.replace && str.replace(/(YYYY)|MM|DD/g,'').split('')
+    if(Array.isArray(separators) ){
+      this.ys = separators[0]
+      this.ms = separators[1]
+    }
+    return this
   },
   nextMonth(month) {
     let nextMonthDays = month + 1
@@ -97,8 +111,9 @@ Calendar.prototype = {
     if (isPrevYear) this.currentYear = this.currentYear - 1
     return this
   },
-  toYear(year) {
+  toDate({year= this.currentYear,month = this.currentMonth}) {
     this.currentYear = year
+    this.currentMonth = month
     return this
   },
   init() {
@@ -126,16 +141,17 @@ Calendar.prototype = {
     let prevYear = otherMonth.prevMonth.isPrevYear ? year - 1 : year
     let nextYear = otherMonth.nextMonthDays.isNextYear ? year + 1 : year
     let today = this.getToday()
-
+    let _y = this.ys || '/'
+    let _m = this.ms || '/'
     let calendarData = []
     // 上个月
     for (let i = 0; i < prevMonthDays.length; i++) {
       let prev = {
         target: 'prev',
-        isAction: false,
+        week:this.getPosDay(prevYear, otherMonth.prevMonth.index,prevMonthDays[i]),
         isToday: `${prevYear}-${otherMonth.prevMonth.index + 1}-${prevMonthDays[i]}` === today,
         date: new Date(prevYear, otherMonth.prevMonth.index, prevMonthDays[i], 0, 0, 0),
-        dateStr: `${prevYear}-${otherMonth.prevMonth.index + 1}-${prevMonthDays[i]}`,
+        dateStr: `${prevYear}${_y}${otherMonth.prevMonth.index + 1}${_m}${prevMonthDays[i]}`,
         year: prevYear,
         month: otherMonth.prevMonth.index + 1,
         day: prevMonthDays[i]
@@ -147,10 +163,10 @@ Calendar.prototype = {
     for (let i = 1; i < currentDays; i++) {
       let current = {
         target: 'current',
-        isAction: false,
+        week:this.getPosDay(year, month,i),
         isToday: `${year}-${month + 1}-${i}` === today,
         date: new Date(year, month, i, 0, 0, 0),
-        dateStr: `${year}-${month + 1}-${i}`,
+        dateStr: `${year}${_y}${month + 1}${_m}${i}`,
         year: year,
         month: month + 1,
         day: i
@@ -164,10 +180,10 @@ Calendar.prototype = {
     for (let i = 0; i < nextMonthDays.length; i++) {
       let next = {
         target: 'next',
-        isAction: false,
+        week:this.getPosDay(nextYear, otherMonth.nextMonthDays.index,nextMonthDays[i]),
         isToday: `${nextYear}-${otherMonth.nextMonthDays.index + 1}-${nextMonthDays[i]}` === today,
         date: new Date(nextYear, otherMonth.nextMonthDays.index, nextMonthDays[i], 0, 0, 0),
-        dateStr: `${nextYear}-${otherMonth.nextMonthDays.index + 1}-${nextMonthDays[i]}`,
+        dateStr: `${nextYear}${_y}${otherMonth.nextMonthDays.index + 1}${_m}${nextMonthDays[i]}`,
         year: nextYear,
         month: otherMonth.nextMonthDays.index + 1,
         day: nextMonthDays[i]
