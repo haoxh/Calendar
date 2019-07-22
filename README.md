@@ -2,7 +2,7 @@
 
  只负责生成日历json数据的工具
 
-###使用与功能
+### 使用与功能
 
 ```sh
  npm i @haoxh/calendar
