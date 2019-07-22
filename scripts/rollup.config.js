@@ -24,8 +24,7 @@ module.exports = {
   outputOpt: {
     file: 'Calendar.min.js',
     format: 'umd',
-    name:'Calendar',
-    banner:`/*!\n* nConsole v1.0.0\n* (c) 2018-2019 haoxh\n* Released under the MIT License.\n*/`
+    name:'Calendar'
   }
 };
 
