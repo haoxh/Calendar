@@ -52,9 +52,9 @@ calendar.paint()
     "week": 0,
     // 是否为今天
     "isToday": false,
-    // 这天的 Date 数据
     // meta 函数返回的数据
     "meta":'上个月',
+    // 这天的 Date 数据
     "date": Date,
     "dateStr": "2018/11/30",
     "year": 2018,
