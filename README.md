@@ -27,7 +27,7 @@ const calendar =  Calendar({
     // 这里可以自定义想要的数据
     meta:function(item){
       console.log('meta',item)
-      return opt[data.target]
+      return opt[item.target]
     },
     // callback 参数为最终的日历josn 数据
     callback: function (calendarJson) {
