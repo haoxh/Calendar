@@ -99,12 +99,12 @@ import  Calendar from '@haoxh/Calendar.min'
   // 触发 meta callback
   calendar.paint()
   
-  // 下个月
+  // 上个月
   function prev() {
     calendar.prev().paint()
   }
 
-  // 上个月
+  // 下个月
   function next() {
     calendar.next().paint()
   }
